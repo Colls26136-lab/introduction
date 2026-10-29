@@ -22,6 +22,7 @@
       background: #f7f8fc;
       color: #1c1c1c;
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
     /* NAVIGATION */
@@ -41,6 +42,7 @@
       backdrop-filter: blur(12px);
 
       border-bottom: 1px solid #e8e8e8;
+      animation: slideDown 0.8s ease both;
     }
 
     .logo {
@@ -68,6 +70,8 @@
 
     /* HERO */
     header {
+      position: relative;
+      isolation: isolate;
       min-height: 100vh;
 
       display: flex;
@@ -76,15 +80,64 @@
 
       padding: 120px 20px 60px;
 
-      background:
-        radial-gradient(circle at top left, #c8d4ff, transparent 40%),
-        radial-gradient(circle at bottom right, #d9c9ff, transparent 40%),
-        #f7f8fc;
+      background: #f7f8fc;
+      overflow: hidden;
+    }
+
+    header::before,
+    header::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 42vw;
+      height: 42vw;
+      min-width: 280px;
+      min-height: 280px;
+      border-radius: 50%;
+      filter: blur(8px);
+      opacity: 0.75;
+      animation: float 12s ease-in-out infinite alternate;
+    }
+
+    header::before {
+      top: -18vw;
+      left: -12vw;
+      background: #b7c8ff;
+    }
+
+    header::after {
+      right: -14vw;
+      bottom: -20vw;
+      background: #e2b9f4;
+      animation-delay: -5s;
     }
 
     .hero {
       max-width: 900px;
       text-align: center;
+      animation: riseIn 0.9s 0.15s ease both;
+    }
+
+    .profile-photo {
+      width: 150px;
+      height: 150px;
+      padding: 6px;
+      margin: 0 auto 25px;
+      border: 2px solid rgba(91, 77, 245, 0.35);
+      border-radius: 50%;
+      background: linear-gradient(135deg, #5b4df5, #e2b9f4, #5b4df5);
+      background-size: 200% 200%;
+      box-shadow: 0 18px 40px rgba(91, 77, 245, 0.2);
+      animation: gradientShift 5s ease infinite;
+    }
+
+    .profile-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: 5px solid #f7f8fc;
+      border-radius: 50%;
     }
 
     .hello {
@@ -99,6 +152,7 @@
 
       font-weight: bold;
       margin-bottom: 20px;
+      animation: riseIn 0.8s 0.35s ease both;
     }
 
     .hero h1 {
@@ -139,6 +193,7 @@
       font-weight: bold;
 
       transition: 0.3s;
+      animation: riseIn 0.8s 0.5s ease both;
     }
 
     .btn-primary {
@@ -209,6 +264,8 @@
       border: 1px solid #eee;
 
       transition: 0.3s;
+      box-shadow: 0 8px 18px rgba(91, 77, 245, 0.08);
+      animation: riseIn 0.7s ease both;
     }
 
     .card:hover {
@@ -216,6 +273,18 @@
 
       box-shadow:
         0 15px 35px rgba(0,0,0,0.08);
+    }
+
+    .card:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .card:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    .card:nth-child(4) {
+      animation-delay: 0.3s;
     }
 
     .icon {
@@ -250,6 +319,21 @@
       gap: 30px;
 
       overflow: hidden;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(49, 43, 118, 0.22);
+    }
+
+    .project::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -70px;
+      top: -90px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      box-shadow: 0 0 0 25px rgba(255, 255, 255, 0.04), 0 0 0 50px rgba(255, 255, 255, 0.03);
+      animation: spin 18s linear infinite;
     }
 
     .project-text {
@@ -267,6 +351,44 @@
 
     .project-icon {
       font-size: 6rem;
+      animation: bob 3s ease-in-out infinite;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      from { transform: translate3d(-3%, -2%, 0) scale(1); }
+      to { transform: translate3d(5%, 6%, 0) scale(1.08); }
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0) rotate(-4deg); }
+      50% { transform: translateY(-12px) rotate(4deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
     }
 
     /* FOOTER */
@@ -343,6 +465,13 @@
   <header>
 
     <div class="hero">
+
+      <div class="profile-photo">
+        <img
+          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=320&q=85"
+          alt="Profile portrait"
+        >
+      </div>
 
       <div class="hello">
         👋 Hello, I'm
